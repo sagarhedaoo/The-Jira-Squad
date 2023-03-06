@@ -1,0 +1,30 @@
+<body>
+    <div>
+        <br>
+        <form id="signinForm" method="post" action="/users/signin">
+
+            <p class="welcome">Welcome back!</p>
+            <p class="welcome">Please Login Here</p>
+            <br/>
+
+            <p class="label">Username :</p>
+            <input type="email" class="form-control" id="signinUserName" name="username" placeholder="username@gmail.com">
+            <br>
+            <p class="label">Password :</p>
+            <input type="password" class="form-control" id="signinPassword" name="password" placeholder="Password Here">
+            <br>
+
+            <div class="form-group">
+                <button type="submit" class="btn AllButton">Login</button>
+            </div>
+
+            {{#unless status}}
+                <p class="wrongMsg">{{message}}</p>
+            {{/unless}}
+
+      </form>
+  </div>
+
+    
+    
+</body>
