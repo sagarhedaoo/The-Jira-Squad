@@ -1,5 +1,5 @@
 const password_validation= (password)=>{
-//error check for password
+//error check for passwords
 
 if(password.length === 0)
 {
