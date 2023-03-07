@@ -81,3 +81,37 @@ router
         }
     }}}
 });
+
+router
+    .route('/login')
+    .post(async (req, res) => {
+
+        try {
+            if (req.session.user) {
+
+                res.status(200).json("You are already loggedIn.");
+            }
+            else {
+                const username = req.body.username;
+                const password = req.body.password;
+                if(username == null || password == null){
+                    throw "Error: Invalid Input"
+                }
+
+                const usercheck = await users.checkuser(username, password);
+                
+                if (usercheck.authenticatedUser == true) {
+                    req.session.user = { username: username, userid: usercheck.userid };
+
+                    res.status(200).json(usercheck);
+                }
+            }
+        }
+        catch (e) {
+            if(e == "Error: Invalid Input") { res.status(400).json(e)}
+            else{
+            res.status(401).json({ "Error": e })
+            }
+        }
+
+    });
