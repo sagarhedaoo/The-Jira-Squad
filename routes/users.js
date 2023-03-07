@@ -9,15 +9,15 @@ const validate = require("../helpers");
 router
     .route('/signup')
     .get(async(req,res) => {
-        let session_exists = req.session.user;
-
-    if (session_exists) 
-	{		
-		return res.redirect('/homePage');
-	}
-
-	res.render('users/signup');
-       
+        if (req.session.user){	
+            return res.redirect('/homePage');
+    
+            
+        }
+        else{
+            res.render('users/signup');	
+    
+        }
     })
     .post(async (req, res) => {
         try {
