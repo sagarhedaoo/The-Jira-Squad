@@ -1,0 +1,504 @@
+.bmiCategories{
+    float: absolute;
+    font-size: 1.0em;
+    color: #1e0044;
+    padding: 2px;
+}
+
+.bmiChart{
+    float: right;
+    font-size: 1.0em;
+    color: #1e0044;
+    padding: 40px;
+    width: 45%;
+}
+
+.bmiResults{
+    font-size: 1.5em;
+    font-weight: bold;
+    color: white;
+    float: center;
+}
+
+.bmiButton{
+    background-color: #1e0044;
+    color: white;
+    transform: scale(1.0);
+}
+
+.bmiButton:hover {
+    color: white;
+    background-color: #7e738d;
+}
+
+.categories a{
+    color : #1e0044;
+}
+
+.rowImg {
+    display: inline-flex;
+}
+  
+.columnImg {
+    flex: 33.33%;
+    padding: 5px;
+}
+
+hr {
+    border-top: 2px solid #1e0044;
+  }
+
+.form-control
+{
+    position:center;
+}
+
+.inputWeight{
+    font-weight : bold;
+}
+
+.inputHeight{
+    font-weight : bold;
+}
+
+.intro {
+    font-size: 2em;
+    text-align: left;
+    width: 1000px;
+    border: 15px solid #1e0044;
+    line-height: 1.5em;
+    padding: 50px;
+    margin: 20px;
+    font-weight: bold;
+    font-weight: bold;
+    color: #1e0044;
+}
+
+body {
+    background-color: rgb(206, 228, 238);
+    opacity: 1;
+}
+
+.item {
+    overflow: hidden;
+}
+
+.fitnessPlatform{
+    color: solid #1e0044;
+}
+
+.right{
+    right: 200px;
+}
+
+.post-part {
+    padding: 10px 20px 20px 50px;
+    float: left;
+}
+
+.user-Pic {
+    width: 200px;
+    height: auto;
+}
+
+.photoContainer {
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+}
+
+.labelTag{
+    margin-right: 50px;
+    font-weight: bold;
+}
+
+.footer {
+    position:relative;
+    height: 80px;
+    background-color: #f4f3f3;
+    text-align: center;
+    font-size: 12px;
+    line-height: 18px;
+    padding-top: 20px;
+    bottom: 0px;
+    width: 100%;
+}
+
+.footer a {
+    text-decoration: none;
+    color: #1e0044;
+}
+
+.footer a:hover {
+    text-decoration: none;
+    color: #7e738d;
+}
+
+.footerButton {
+    color: #1e0044;
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    border: 0px;
+}
+
+.loginPallete{
+    position: center;
+    left: auto;
+    right: auto
+}
+
+#addNewPost {
+    position: relative;
+    padding-left: 25%;
+}
+
+#makePost {
+    padding-left: 18px;
+    font-weight: bold;
+    color: #1e0044;
+}
+
+#signinForm {
+    padding-right: 300px;
+    padding-left: 300px;
+    text-align: left;
+    margin: 5%;
+}
+
+#signupForm {
+    padding-right: 300px;
+    padding-left: 300px;
+    text-align: left;
+    margin: 3%;
+}
+
+.popUp{
+    font-weight: bold;
+    color: #1e0044;
+    text-align: center;
+}
+
+
+.panel-body {
+    padding: 5px 15px;
+}
+
+.PostTopic {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #1e0044;
+}
+
+.commentCreatorName {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.postPicture {
+    height: 200px;
+    width: 200px;
+}
+
+.alert {
+    margin-top: 20px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.post-imgs {
+    width: 320px;
+    height: auto;
+    overflow: hidden;
+    padding-top: 20px;
+    padding-left: 100px;
+}
+
+.post-glyphicon {
+    float: right;
+}
+
+.post-time {
+    font-size: 1.2em;
+    color: #1e0044;
+    float: right;
+}
+
+.glyphicon:hover {
+    cursor: pointer;
+}
+
+.panel-danger {
+    border: #1e0044 solid;
+}
+
+#searchButton {
+    text-decoration: none;
+    background-color: #1e0044;
+    color: white;
+}
+
+#searchButton:hover {
+    text-decoration: none;
+    background-color: #7e738d;
+}
+
+.bmiDescription{
+    font-size: 18px;
+    color: #1e0044;
+    padding-right : 100px; 
+    float : right;
+    margin-left: 35px;
+    font-weight: bold;
+}
+
+#userNAME{
+    font-size: 18px;
+    color: #1e0044;
+}
+
+#userNAME>a {
+    
+    font-size: 18px;
+    text-decoration: none;
+    color: #1e0044;
+}
+
+.AllButton {
+     background-color: #1e0044;
+     color: white;
+     transform: scale(1.0);
+ }
+
+.AllButton:hover {
+    color: white;
+    background-color: #7e738d;
+}
+
+.jumpToPost {
+    font-size: 25px;
+    text-decoration: none;
+    color: #1e0044;
+}
+
+.jumpToPost:hover {
+    text-decoration: none;
+    color: #7e738d;
+}
+
+.AllContent {
+    font-size: 17px;
+    color: #7e7e7e;
+}
+
+#addNewPost {
+    background-color: #c8c9dd;
+    padding-bottom: 20px;
+    border-radius: 10px;
+    border: #1e0044 solid;
+}
+
+.noPost{
+    font-weight: bold;
+    color: #000000;
+}
+
+.wrongMsg {
+    background-color: #1e0044;
+    font-size: 20px;
+    font-weight: bold;
+    color: red;
+}
+
+.rightMsg {
+    background-color: #1e0044;
+    font-size: 20px;
+    font-weight: bold;
+    color: #44b01e;
+}
+
+.welcome{
+    font-size: 2em;
+    font-weight: bold;
+    padding-right: 10px;
+    padding-left: 1px;
+    color: #1e0044;
+}
+
+#addnewPosttip {
+    width: auto;
+    text-align: center;
+}
+
+#goBack {
+    text-decoration: none;
+    font-size: large;
+    color: #1e0044;
+}
+#goBack:hover {
+    color: #7e738d;
+}
+
+.reportHead {
+    font-size: 1.8em;
+    padding-right: 350px;
+    padding-left: 350px;
+    text-align: left;
+    margin: 3%;
+    font-weight: bold;
+}
+
+.reportReasons{
+    padding-right: 350px;
+    padding-left: 350px;
+}
+
+.reported {
+    color: #1e0044;
+    text-decoration: none;
+}
+
+.reported:hover {
+    text-decoration: none;
+    color: #7e738d;
+}
+
+#Whyreport {
+    font-size: 1.7em;
+}
+
+.reportTips {
+    font-size: 20px;
+}
+
+#reportSubmit {
+    background-color: #1e0044;
+    color: white;
+}
+#reportSubmit:hover {
+    background-color: #7e738d;
+}
+
+#upUButton {
+    background-color: #1e0044;
+    color: white;
+}
+#upUButton:hover {
+    background-color: #7e738d;
+}
+
+#upNButton {
+    background-color: #1e0044;
+    color: white;
+}
+#upNButton:hover {
+    background-color: #7e738d;
+}
+
+#upPButton {
+    background-color: #1e0044;
+    color: white
+}
+#upPButton:hover {
+    background-color: #7e738d;
+}
+
+.usercenterPic {
+    width: 350px;
+    height: auto;
+}
+
+.usercenterPic-container {
+    width: 350px;
+    height: 250px;
+    overflow: hidden;
+}
+
+.usercenterTopic {
+    font-size: large;
+    text-decoration: none;
+    color: #1e0044;
+}
+.usercenterTopic:hover {
+    text-decoration: none;
+    color: #7e738d;
+}
+
+.thumbnail {
+    height: auto;
+}
+
+.ButtonContainer {
+    text-align: center;
+}
+
+.usercenterBu {
+    background-color: #1e0044;
+    color: white;
+}
+
+.usercenterBu:hover {
+    background-color: #7e738d;
+    color: white;
+}
+
+#postTip {
+    text-align: center;
+}
+
+.viewCount {
+    text-align: right;
+    font-size: 20px;
+    color: #1e0044;
+}
+
+.glyphicon {
+    color: #1e0044;
+}
+
+.commentDelete {
+    position: relative;
+    text-align: right;
+}
+
+.reportList {
+    list-style: none;
+    font-size: 20px;
+    padding-left: 600px;
+}
+.reportList>a {
+    text-decoration: none;
+    color: #1e0044;
+}
+
+.BACK {
+    text-decoration: none;
+    color: #1e0044;
+}
+
+.BACK:hover {
+    text-decoration: none;
+    color: #7e738d;
+}
+
+.navbar-toggle collapsed{
+    background-color: blue;
+}
+
+.errorToLogin{
+    text-align: right;
+}
+
+.PostIdList{
+    text-decoration: none;
+    color: #1e0044;
+}
+
+.infoDateViews{
+    border: 5px solid #1e0044;
+    line-height: 1.5em;
+    padding: 40px;
+    margin: 10px;
+    display: left;
+    text-decoration: block;
+}
