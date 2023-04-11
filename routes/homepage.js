@@ -4,10 +4,8 @@ const router = express.Router();
 const formidable = require('formidable');
 
 const data = require("../data");
-//const postData = data.posts;
 const userData = data.users;
-//const commentData = data.comments;
-//const reportData =  data.reports;
+
 
 router.get('/', async (req, res) => 
 {

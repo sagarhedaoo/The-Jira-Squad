@@ -41,6 +41,6 @@ module.exports =
     }
     if (arrayInvalidFlag)
       throw `One or more elements in ${varName} array is not a string or is an empty string`;
-    return arr;
-  }
+    return arr;
+  }
 };

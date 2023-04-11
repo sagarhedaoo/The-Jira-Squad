@@ -5,13 +5,119 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+    <title>Solar Management System</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../public/css/style.css"> 
 
 </head>
 
     <body>
-         <div>
+
+    <div class="bg-color">
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header"> 
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    
+                   
+                </div> 
+
+                <label class = "Solar"> <img src="/public/images/logo.svg"><a href="http://localhost:3000/homePage"> </a></img></label>
+                
+                <div role="navigation" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                    <div class ="search-bar"> 
+                        <div class="form-group">
+                            <input id="searchContent" type="text" class="search-container" placeholder=" Enter Search Words Here">
+                        </div>
+
+                        <a id="searchButton" href="http://localhost:3000/homePage" class="btn">Go</a>
+
+                    </div>
+
+                    <ul class="nav navbar-nav">
+                        <li class="categories">
+                            <a href="http://localhost:3000/homePage/">Tasks</a>
+                        </li>
+                        <li class="categories">
+                            <a href="http://localhost:3000/homePage/">Contracts</a>
+                        </li>
+                       
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right"> 
+                        {{#if userLogin}}
+                            <li>
+                            <span>
+                                <a href="/users/account"> <span id="userNAME">Welcome Back! Account : {{userLogin.nickname}}</a></span>&nbsp;&nbsp; 
+                            </span>
+                            </li>
+                            <li>
+                            <button type="button" onclick = "window.location.href='/users/signout'" class="btn AllButton navbar-btn">Log Out</button>
+                            </li>
+                        {{else}}
+                            <li>
+                            <button type="button" onclick = "window.location.href='/users/signin'" class="btn btn-default navbar-btn">Login</button>
+                            </li>
+
+                            <li>
+                            <button type="button" onclick = "window.location.href='/users/signup'" class="btn AllButton navbar-btn">Register</button>
+                            </li>
+                        {{/if}}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div>
             {{{body}}}
         </div>
+        <hr/>
+    </div>
+
+    <div class="footer">
+        <p>
+            <p class="footerButton"> footer </p>
+            <p>
+               
+            </p>
+        </p>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+</svg>
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>  
+
+    <script type="text/javascript">
+
+        $('#searchButton').click(function () 
+        {
+            let typeIn = $('#searchContent').val();
+            var url;
+
+            if(typeIn)
+            {
+                url = `http://localhost:3000/homePage/search?searchString=${typeIn}`;
+            }
+            else 
+            {
+                url = "http://localhost:3000/homePage";
+            }
+            
+            $('#searchButton').prop('href', url)
+        })
+    </script>
     </body>
 </html>

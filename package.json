@@ -1,27 +1,30 @@
 {
-  "name": "the-jira-squad",
+  "name": "thejirasquad",
   "version": "1.0.0",
-  "description": "Project repository for SSW/CS 555",
+  "description": "Solar Management System",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "nodemon app.js",
+    "seed": "node ./tasks/seed.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sagarhedaoo/The-Jira-Squad.git"
+    "url": ""
   },
-  "author": "Jira Squad",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/sagarhedaoo/The-Jira-Squad/issues"
-  },
-  "homepage": "https://github.com/sagarhedaoo/The-Jira-Squad#readme",
+  "author": "Priyanka Zala",
+  "license": "MIT",
   "dependencies": {
     "bcrypt": "^5.1.0",
-    "cookie-parser": "^1.4.6",
-    "express": "^4.18.2",
-    "express-session": "^1.17.3",
-    "mongo": "^0.1.0"
+    "bcryptjs": "^2.4.3",
+    "bootstrap-icons": "^1.10.2",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "express-handlebars": "^6.0.6",
+    "express-session": "^1.17.1",
+    "formidable": "^1.2.2",
+    "handlebars": "^4.7.6",
+    "mongodb": "^3.5.6",
+    "nodemon": "^2.0.22"
   }
 }

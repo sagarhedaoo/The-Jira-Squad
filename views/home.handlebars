@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+<div class="container">
+    <main class="container">
+
+       
+
+        <br/>
+        <br/>
+
+        <div class="intro" style="margin-left: 30px">
+            <p>Welcome to the DashBoard <br> Info Info Info <br>  <hr class="hr1"> Some More Info</p>
+        </div>
+
+        <br/>
+        <br/>
+        <br/>
+        <hr>
+        <br/>
+
+        {{#if userLogin}}
+            <div>
+                <h1>TaskList</h1>
+            <ul>
+                <li>task item</li>
+            </ul>
+
+        {{else}}
+
+           <h3 class="popUp">Please Login to view your tasks </h3>
+
+        {{/if}}
+
+        <br/>
+
+        <hr>
+
+        </div>
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+
+</body>
+</html>

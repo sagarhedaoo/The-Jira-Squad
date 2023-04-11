@@ -7,24 +7,43 @@
             <p class="welcome">Please Login Here</p>
             <br/>
 
-            <p class="label">Username :</p>
+            <p class="noPost">Username :</p>
             <input type="email" class="form-control" id="signinUserName" name="username" placeholder="username@gmail.com">
             <br>
-            <p class="label">Password :</p>
+            <p class="noPost">Password :</p>
             <input type="password" class="form-control" id="signinPassword" name="password" placeholder="Password Here">
             <br>
 
             <div class="form-group">
                 <button type="submit" class="btn AllButton">Login</button>
             </div>
+             
+               
+                <a  href="http://localhost:3000/users/signup" >Register</a>
+                
+            
 
             {{#unless status}}
                 <p class="wrongMsg">{{message}}</p>
+               
             {{/unless}}
 
       </form>
   </div>
 
-    
-    
+
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <script>
+function myFunction() {
+  document.getElementById("demo").innerHTML = "Hello World";
+}
+</script>
+
 </body>
