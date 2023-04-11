@@ -3,8 +3,29 @@ const app = express();
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const configRoutes = require("./routes");
+const static = express.static(__dirname + "/public");
 
+const exphbs = require("express-handlebars");
+app.use("/public", static);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
+app.engine("handlebars", exphbs.engine({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
+app.use(express.json());
+app.use(
+	session({
+        name: 'AuthCookie',
+        secret: 'Its a secret',
+        resave: false,
+        saveUninitialized: true,
+        cookie: { 
+        maxAge: 704800000
+    },
+    })
+);
 configRoutes(app);
 
 app.listen(3000, () => {
