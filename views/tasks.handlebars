@@ -1,10 +1,41 @@
-<div id="myDIV" class="header">
-  <h2 style="margin:5px">My To Do List</h2>
-  <input type="text" id="myInput" placeholder="Title...">
-  <span onclick="newElement()" class="addBtn">Add</span>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-<ul id="myUL">
-  <li>{{}}</li>
-  
-</ul>
+<title>To Do List</title>
+
+</head>
+<body>
+    <div class="container-title">
+        <h1>To Do List</h1>
+    </div>
+    <div class="container">
+        <div class="inputcol">
+            <textarea name="text" class="textarea"></textarea>
+            <button type="button" class="buttoninput"><i class="fa-solid fa-check"></i></button>
+        </div>
+    </div>
+    <div class="todolist">
+
+    </div>
+
+    <script id="tasks-template" type="text/x-handlebars-template">
+        {{#each tasks}}
+            <div class="itemall">
+                <p class="item">{{this}}</p>
+                <button class="check-button"><i class="fa-solid fa-check"></i></button>
+                <button class="trash-button"><i class="fa-solid fa-trash"></i></button>
+            </div>
+        {{/each}}
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+    <script src="../public/js/app.js"></script>
+
+</body>
+</html>

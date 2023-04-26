@@ -4,6 +4,97 @@ const data = require("../data");
 const bcrypt = require('bcryptjs');
 const saltRounds = 5;
 const userData = data.users;
+const photoData = data.photos;
+
+
+router.get('/tasks', async (req, res) => {
+
+    res.render("tasks.handlebars");
+});
+
+router.post('/tasks', async (req, res) => {
+  res.render("home.handlebars")
+
+});
+
+router.delete('/tasks', async (req, res) => {
+
+    const id = req.params.id;
+  if (id >= 0 && id < todos.length) {
+    todos.splice(id, 1);
+    res.json(todos);
+  } else {
+    res.status(400).json({ error: 'Invalid todo ID' });
+  }
+
+});
+
+
+router.get('/', async (req, res) => 
+{
+    try 
+    {
+        let userLogin = null;
+
+        if (req.session) 
+        {
+            if (req.session.userId)
+            {
+                userLogin = await userData.getUserById(req.session.userId);
+            }
+        }
+
+       
+
+        
+        
+        res.render('home.handlebars', {  userLogin });
+    } 
+    catch (error) 
+    {
+        res.render('signin.handlebars');
+    }
+});
+
+
+
+
+router.get("/search", async (req, res) => 
+{
+    try 
+    { 
+        let userLogin = null;
+
+        if (req.session) 
+        {
+            if (req.session.userId)
+            {
+                userLogin = await userData.getUserById(req.session.userId);
+            }      
+        }
+
+        if (!req.query)
+        {
+            throw "Error : No String Given";
+        }
+
+        if (!req.query.searchString)
+        {
+            throw "Error : No String Given";
+        }
+            
+        let postArr = await postData.getPostByString(req.query.searchString);
+
+        res.render('home/home.handlebars', { postArr, userLogin });
+    } 
+    catch (error) 
+    {
+        res.redirect('/homePage')
+    }
+})
+
+
+
 
 router.get('/account', async (req, res) => 
 {
@@ -354,4 +445,34 @@ router.get("/", async (req, res) =>
     }
 });
 
+
+router.get('/photo',async (req, res) => 
+{
+	try 
+    {
+        let userLogin = null;
+
+        if (req.session) 
+        {
+            if (req.session.userId)
+            {
+                userLogin = await userData.getUserById(req.session.userId);
+            }
+        }
+	res.render('photoForm.handlebars');
+	}
+	catch(e){
+		res.render('home.handlebars')
+	}
+});
+  
+  // Set up a POST route to handle form submissions
+  router.post('/submit',async (req, res) => {
+	const { clientName, staffName, locationAddress } = req.body;
+	const photos = req.body.photos;
+	// Do something with the form data and photos here
+	const result = await photoData.storePhoto(clientName, staffName, locationAddress, photos);
+
+	res.render('photo.handlebars');
+  });
 module.exports = router;

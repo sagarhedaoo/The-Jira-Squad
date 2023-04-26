@@ -1,16 +1,15 @@
 const path = require('path');
 
-const userRoutes = require("./users");
-const homePageRoutes = require("./homePage");
+const allRoutes = require("./allroutes");
 
 const constructorMethod = app => 
 {
-    app.use("/users", userRoutes);
-    app.use("/homePage", homePageRoutes);
+    app.use("/", allRoutes);
+    
     
     app.get('/', (req, res) => 
     {
-        res.redirect('http://localhost:3000/homePage');
+        res.redirect('http://localhost:3000/');
     });
 
     app.use("*", (req, res) => 
