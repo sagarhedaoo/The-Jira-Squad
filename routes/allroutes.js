@@ -139,7 +139,7 @@ router.get("/signup", async (req, res) => {
   res.render("signup");
 });
 
-router.post("/signup", async (req, res) => {
+router.post("signup", async (req, res) => {
   let loggedOrNot = req.session.userId;
 
   const { username, nickname, password } = req.body;
@@ -186,7 +186,7 @@ router.post("/signup", async (req, res) => {
 
     return res.redirect("/homePage");
   } catch (e) {
-    res.status(404).render("signup", { message: e });
+    res.status(404).render("/users/signup", { message: e });
   }
 });
 
