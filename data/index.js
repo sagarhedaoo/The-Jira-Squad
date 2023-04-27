@@ -1,10 +1,9 @@
 const userData = require("./users");
 const tasksData = require("./tasks");
-const photoData = require("./photos")
+const photoData = require("./photos");
 
-module.exports = 
-{
-    users: userData,
-    tasks: tasksData,
-    photos: photoData
+module.exports = {
+  users: userData,
+  tasks: tasksData,
+  photos: photoData,
 };

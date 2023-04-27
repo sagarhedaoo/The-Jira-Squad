@@ -1,45 +1,52 @@
 <body>
-    <div>
-        <br>
-        <form id="signinForm" method="post" action="/users/signin">
+  <div>
+    <br />
+    <form id="signinForm" method="post" action="/users/signin">
 
-            <p class="welcome">Welcome back!</p>
-            <p class="welcome">Please Login Here</p>
-            <br/>
+      <p class="welcome">Welcome back!</p>
+      <p class="welcome">Please Login Here</p>
+      <br />
 
-            <p class="noPost">Username :</p>
-            <input type="email" class="form-control" id="signinUserName" name="username" placeholder="username@gmail.com">
-            <br>
-            <p class="noPost">Password :</p>
-            <input type="password" class="form-control" id="signinPassword" name="password" placeholder="Password Here">
-            <br>
+      <p class="noPost">Username :</p>
+      <input
+        type="email"
+        class="form-control"
+        id="signinUserName"
+        name="username"
+        placeholder="username@gmail.com"
+      />
+      <br />
+      <p class="noPost">Password :</p>
+      <input
+        type="password"
+        class="form-control"
+        id="signinPassword"
+        name="password"
+        placeholder="Password Here"
+      />
+      <br />
 
-            <div class="form-group">
-                <button type="submit" class="btn AllButton">Login</button>
-            </div>
-             
-               
-                <a  href="http://localhost:3000/users/signup" >Register</a>
-                
-            
+      <div class="form-group">
+        <button type="submit" class="btn AllButton">Login</button>
+      </div>
 
-            {{#unless status}}
-                <p class="wrongMsg">{{message}}</p>
-               
-            {{/unless}}
+      <a href="http://localhost:3000/views/signup">Register</a>
 
-      </form>
+      {{#unless status}}
+        <p class="wrongMsg">{{message}}</p>
+
+      {{/unless}}
+
+    </form>
   </div>
 
-
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-   
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
 
 </body>

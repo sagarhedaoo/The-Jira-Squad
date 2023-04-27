@@ -1,34 +1,59 @@
 <body>
-    <div>
-        <form id="signupForm" method="post" action="/users/signup">
+  <div>
+    <form id="signupForm" method="post" action="/users/signup">
 
-            <p class="welcome">Welcome to Solar Management Portal!</p>
-            <p class="welcome">To enjoy all that this portal has to offer, Register Now!</p>
+      <p class="welcome">Welcome to Solar Management Portal!</p>
+      <p class="welcome">To enjoy all that this portal has to offer, Register
+        Now!</p>
 
-            <br>
+      <br />
 
-            <p class="noPost">Username :</p>
+      <p class="noPost">Username :</p>
 
-            <input type="email" class="form-control" id="signupUserName" name="username" placeholder="abc456@gmail.com">
-            <br>
-            <p class="noPost">Display Name :</p >
-            <input type="text" class="form-control" id="signupNickName" name="nickname" placeholder="Display Name Here">
-            <br>
-            <p class="noPost">Password :</p>
-            <input type="password" class="form-control" id="signupPassword" name="password" placeholder="Password Here">
-            <br>
-            <p class="noPost">Confirm Password :</p>
-            <input type="password" class="form-control" id="signupConfirmPassword" name="password" placeholder="Confirm Password Here">
-            <br>
-            <div class="form-group">
-                <button type="submit" class="btn AllButton">Register Now</button>
-            </div>
+      <input
+        type="email"
+        class="form-control"
+        id="signupUserName"
+        name="username"
+        placeholder="abc456@gmail.com"
+      />
+      <br />
+      <p class="noPost">Display Name :</p>
+      <input
+        type="text"
+        class="form-control"
+        id="signupNickName"
+        name="nickname"
+        placeholder="Display Name Here"
+      />
+      <br />
+      <p class="noPost">Password :</p>
+      <input
+        type="password"
+        class="form-control"
+        id="signupPassword"
+        name="password"
+        placeholder="Password Here"
+      />
+      <br />
+      <p class="noPost">Confirm Password :</p>
+      <input
+        type="password"
+        class="form-control"
+        id="signupConfirmPassword"
+        name="password"
+        placeholder="Confirm Password Here"
+      />
+      <br />
+      <div class="form-group">
+        <button type="submit" class="btn AllButton">Register Now</button>
+      </div>
 
-            {{#unless status}}
-                <p class="wrongMsg">{{message}}</p>
-            {{/unless}}
+      {{#unless status}}
+        <p class="wrongMsg">{{message}}</p>
+      {{/unless}}
 
-            </form>
-    </div>
+    </form>
+  </div>
 
 </body>

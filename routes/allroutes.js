@@ -124,11 +124,9 @@ router.post("/signin", async (req, res) => {
       break;
     }
   }
-  res
-    .status(401)
-    .render("signin", {
-      message: "Error : Credentials do not match. No Account? Register now!",
-    });
+  res.status(401).render("signin", {
+    message: "Error : Credentials do not match. No Account? Register now!",
+  });
 });
 
 router.get("/signup", async (req, res) => {
@@ -346,18 +344,16 @@ router.post("/account", async (req, res) => {
       posts.push(eachPost);
     }
 
-    res
-      .status(404)
-      .render("useraccount", {
-        username: ous,
-        nickname: odn,
-        "post-list": posts,
-        message1: message1,
-        message2: message2,
-        message3: message3,
-        message4: message4,
-        loggedUser: oldUser,
-      });
+    res.status(404).render("useraccount", {
+      username: ous,
+      nickname: odn,
+      "post-list": posts,
+      message1: message1,
+      message2: message2,
+      message3: message3,
+      message4: message4,
+      loggedUser: oldUser,
+    });
   }
 });
 
