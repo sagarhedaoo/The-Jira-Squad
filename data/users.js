@@ -29,29 +29,6 @@ async function createUser(username, password, nickname) {
     throw "Error : Display Name must contain more than two characters and should not include any numbers or special charaters";
   }
 
-  /*if(password.length === 0)
-    {
-        throw "Error : Please enter the password";
-    }
-    else if(password.length<3)
-    {
-        throw "Error : Password must be between 3 to 20 characters";
-    }
-    else if(password.length>20)
-    {
-        throw "Error : Password must be between 3 to 20 characters";
-    }
-    else
-    {
-        const regex = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g;
-        
-        if((password.match("[a-zA-Z0-9]" === null) || (password.match(regex) === null)))
-        {
-            throw `Error : Password must contain atleast one capital letter, a number and a special character`;
-        }
-        
-    }*/
-
   const userCollection = await users();
   let usernameFound = await userCollection.findOne({ username: tempUsername });
 
