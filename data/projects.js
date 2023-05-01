@@ -4,7 +4,7 @@ const projects = mongoCollections.projects;
 const { ObjectId } = require("mongodb");
 const userData = require("./users");
 const activityData = require("./activity");
-const validation = require("../validation");
+const validation = require("./validation");
 
 async function getProject(projectId, getParent = true, getChildren = true) {
   projectId = validation.checkId(projectId);

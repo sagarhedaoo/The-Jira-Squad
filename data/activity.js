@@ -1,7 +1,7 @@
 const mongoCollections = require("../config/mongoCollections");
 const projects = mongoCollections.projects;
 const { ObjectId } = require("mongodb");
-const validation = require("../validation");
+const validation = require("./validation");
 
 async function getMessage(messageId) {
   messageId = validation.checkId(messageId);

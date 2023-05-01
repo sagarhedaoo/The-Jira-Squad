@@ -5,7 +5,7 @@ const { ObjectId } = require("mongodb");
 const userData = require("./users");
 const projectData = require("./projects");
 const activityData = require("./activity");
-const validation = require("../validation");
+const validation = require("./validation");
 
 async function getTask(taskId) {
   taskId = validation.checkId(taskId);
