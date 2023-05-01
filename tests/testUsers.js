@@ -1,6 +1,6 @@
 const { assert } = require("chai");
 const { ObjectID } = require("mongodb");
-const { createUser, editNickname, getUserById } = require("./users");
+const { createUser, editNickname, getUserById } = require("../data/users");
 const { users } = require("../config/mongoCollections");
 
 describe("editNickname function", function () {

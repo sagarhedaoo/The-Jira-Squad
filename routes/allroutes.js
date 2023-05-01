@@ -255,28 +255,6 @@ router.post("/account", async (req, res) => {
       throw `di`;
     }
 
-    /*if(password.length === 0)
-   		{
-        	throw "Error : Please enter the password";
-    	}
-    	else if(password.length<3)
-    	{	
-        	throw "three";
-    	}
-    	else if(password.length>20)
-    	{
-        	throw "20";
-    	}
-    	else
-    	{
-       		const regex = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g;
-        
-        	if((password.match("[a-zA-Z0-9]" === null) || (password.match(regex) === null)))
-        	{
-            	throw `a9`;
-        	}
-    	}	*/
-
     let updatedUser = await userData.getUserById(loggedOrNot);
 
     let eachUsersPost = updatedUser.posts;
