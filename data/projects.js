@@ -1,227 +1,236 @@
 const mongoCollections = require("../config/mongoCollections");
+const users = mongoCollections.users;
 const projects = mongoCollections.projects;
 const { ObjectId } = require("mongodb");
+const userData = require("./users");
+const activityData = require("./activity");
 const validation = require("../validation");
 
-async function getMessage(messageId) {
-  messageId = validation.checkId(messageId);
-
-  const projectCollection = await projects();
-  const project = await projectCollection.findOne({
-    "activity._id": new ObjectId(messageId),
-  });
-  if (project === null) throw "No message with that id";
-
-  const message = project.activity.find(
-    (message) => message._id.toString() === messageId
-  );
-  message._id = message._id.toString();
-  message.userId = message.userId.toString();
-  if ("taskId" in message) message.taskId = message.taskId.toString();
-  if ("subtaskId" in message) message.subtaskId = message.subtaskId.toString();
-  return message;
-}
-
-async function getAllMessages(projectId) {
+async function getProject(projectId, getParent = true, getChildren = true) {
   projectId = validation.checkId(projectId);
+  getParent = validation.checkBoolean(getParent);
+  getChildren = validation.checkBoolean(getChildren);
 
+  // Find project
   const projectCollection = await projects();
   const project = await projectCollection.findOne({
     _id: new ObjectId(projectId),
   });
   if (project === null) throw "No project with that id";
 
+  // Stringify ids
+  project._id = project._id.toString();
+  for (let i = 0; i < project.tasks.length; i++) {
+    project.tasks[i]._id = project.tasks[i]._id.toString();
+    project.tasks[i].ownerId = project.tasks[i].ownerId.toString();
+    for (let j = 0; j < project.tasks[i].subtasks.length; j++) {
+      project.tasks[i].subtasks[j]._id =
+        project.tasks[i].subtasks[j]._id.toString();
+      for (let k = 0; k < project.tasks[i].subtasks[j].comments; k++) {
+        project.tasks[i].subtasks[j].comments[k]._id =
+          project.tasks[i].subtasks[j].comments[k]._id.toString();
+      }
+    }
+    for (let j = 0; j < project.tasks[i].comments.length; j++) {
+      project.tasks[i].comments[j]._id =
+        project.tasks[i].comments[j]._id.toString();
+    }
+  }
+  for (let i = 0; i < project.photos.length; i++) {
+    project.photos[i]._id = project.photos[i]._id.toString();
+  }
+  for (let i = 0; i < project.comments.length; i++) {
+    project.comments[i]._id = project.comments[i]._id.toString();
+  }
   for (let i = 0; i < project.activity.length; i++) {
     project.activity[i]._id = project.activity[i]._id.toString();
     project.activity[i].userId = project.activity[i].userId.toString();
+    if ("taskId" in project.activity[i])
+      project.activity[i].taskId = project.activity[i].taskId.toString();
+    if ("subtaskId" in project.activity[i])
+      project.activity[i].subtaskId = project.activity[i].subtaskId.toString();
   }
-  return project.activity;
+
+  // Attach parent project
+  if (project.parentId !== null) {
+    project.parentId = project.parentId.toString();
+
+    if (getParent) {
+      const rawParent = await getProject(project.parentId, false, false);
+      const parent = {
+        _id: rawParent._id.toString(),
+        title: rawParent.title,
+      };
+      project.parent = parent;
+    }
+  } else {
+    if (getParent) project.parent = null;
+  }
+
+  // Attach child projects
+  if (getChildren) {
+    project.subprojects = [];
+    const rawSubprojects = await projectCollection
+      .find({ parentId: new ObjectId(projectId) })
+      .toArray();
+    for (const rawSubproject of rawSubprojects) {
+      const subproject = {
+        _id: rawSubproject._id.toString(),
+        title: rawSubproject.title,
+      };
+      project.subprojects.push(subproject);
+    }
+  }
+
+  return project;
 }
 
-async function createMessage(
-  projectId,
-  projectTitle,
-  userId,
-  content,
-  tags,
-  level,
-  taskId,
-  subtaskId
-) {
-  projectId = validation.checkId(projectId);
-  projectTitle = validation.checkString(projectTitle);
+async function getAllProjects(userId) {
   userId = validation.checkId(userId);
-  content = validation.checkString(content);
-  if (tags !== undefined) tags = validation.checkString(tags);
-  level = validation.checkNonnegativeInteger(level);
-  if (level > 0) taskId = validation.checkId(taskId);
-  if (level > 1) subtaskId = validation.checkId(subtaskId);
 
-  content += ` [${projectTitle}${tags !== undefined ? ` > ${tags}` : ""}]`;
+  const user = await userData.getUser(userId);
+
+  const projects = [];
+  for (const projectId of user.projects) {
+    const project = await getProject(projectId);
+    projects.push(project);
+  }
+
+  return projects;
+}
+
+async function createProject(userId, title, parentId, addMembers) {
+  userId = validation.checkId(userId);
+  title = validation.checkString(title);
+  if (parentId !== undefined) {
+    parentId = validation.checkId(parentId);
+    addMembers = validation.checkBoolean(addMembers);
+
+    const parent = await getProject(parentId);
+    parentId = new ObjectId(parentId);
+  } else {
+    parentId = null;
+  }
+
+  const user = await userData.getUser(userId);
+  const userCollection = await users();
+  const projectCollection = await projects();
+  const projectId = new ObjectId();
+  const newProject = {
+    _id: projectId,
+    title: title,
+    parentId: parentId,
+    owner: new ObjectId(user._id),
+    stage: 0,
+    tasks: [],
+    photos: [],
+    comments: [],
+    activity: [],
+  };
+
+  const insertInfo = await projectCollection.insertOne(newProject);
+  if (!insertInfo.acknowledged || !insertInfo.insertedId)
+    throw "Could not add project";
+  const updateInfo = await userCollection.updateOne(
+    { _id: new ObjectId(userId) },
+    { $addToSet: { projects: new ObjectId(projectId) } }
+  );
+
+  // If created as subproject and prompted to do so, add all members of parent project to subproject
+  if (parentId !== null && addMembers === true) {
+    const users = await getUsersInProject(parentId.toString());
+    for (const user of users) {
+      await joinProject(user._id, projectId.toString(), false);
+    }
+  }
+
+  const project = await getProject(projectId.toString());
+  return project;
+}
+
+async function joinProject(userId, projectId, throwIfMember = true) {
+  userId = validation.checkId(userId);
+  projectId = validation.checkId(projectId);
+  throwIfMember = validation.checkBoolean(throwIfMember);
+
+  const user = await userData.getUser(userId);
+  let project = await getProject(projectId);
+
+  let inProject = false;
+  for (const id of user.projects) {
+    if (id === projectId) {
+      inProject = true;
+      break;
+    }
+  }
+  if (inProject && throwIfMember) throw "User already belongs to this project";
+
+  if (!inProject) {
+    const userCollection = await users();
+    const updateInfo = await userCollection.updateOne(
+      { _id: new ObjectId(userId) },
+      { $addToSet: { projects: new ObjectId(projectId) } }
+    );
+  }
+
+  // Join parent project if it exists
+  if (project.parentId !== null) {
+    await joinProject(userId, project.parentId, false);
+  }
+
+  project = await getProject(projectId);
+  return project;
+}
+
+async function getUsersInProject(projectId) {
+  projectId = validation.checkId(projectId);
+
+  const project = await getProject(projectId);
+
+  const allUsers = await userData.getAllUsers();
+  const users = allUsers.filter((user) => user.projects.includes(projectId));
+
+  return users;
+}
+
+async function findUserInProject(userId, projectId) {
+  userId = validation.checkId(userId);
+  projectId = validation.checkId(projectId);
+
+  const user = await userData.getUser(userId);
+  const project = await getProject(projectId);
+  if (!user.projects.some((project) => project._id === projectId))
+    "User does not belong to this project";
+
+  return user;
+}
+
+async function moveProject(projectId, forward) {
+  projectId = validation.checkId(projectId);
+  forward = validation.checkBoolean(forward);
+
+  const project = await getProject(projectId);
+
+  const newStage = forward
+    ? Math.min(project.stage + 1, 8)
+    : Math.max(project.stage - 1, 0);
 
   const projectCollection = await projects();
-  const project = await projectCollection.findOne({
-    _id: new ObjectId(projectId),
-  });
-  if (project === null) throw "No project with that id";
-
-  const messageId = new ObjectId();
-  const message = {
-    _id: messageId,
-    userId: new ObjectId(userId),
-    date: new Date(),
-    content,
-    level,
-  };
-  if (level > 0) message.taskId = new ObjectId(taskId);
-  if (level > 1) message.subtaskId = new ObjectId(subtaskId);
-
   const updateInfo = await projectCollection.updateOne(
     { _id: new ObjectId(projectId) },
-    { $addToSet: { activity: message } }
+    { $set: { stage: newStage } }
   );
 
-  return await getMessage(messageId.toString());
-}
-
-async function createMessageFromProject(projectId, userId, content, tags) {
-  const project = await getProject(projectId);
-  return await createMessage(
-    project._id,
-    project.title,
-    userId,
-    content,
-    tags,
-    0
-  );
-}
-
-async function createMessageFromTask(taskId, userId, content, tags) {
-  const project = await getProjectFromTaskId(taskId);
-  return await createMessage(
-    project._id,
-    project.title,
-    userId,
-    content,
-    tags,
-    1,
-    taskId
-  );
-}
-
-async function createMessageFromSubtask(
-  taskId,
-  subtaskId,
-  userId,
-  content,
-  tags
-) {
-  const project = await getProjectFromTaskId(taskId);
-  return await createMessage(
-    project._id,
-    project.title,
-    userId,
-    content,
-    tags,
-    2,
-    taskId,
-    subtaskId
-  );
-}
-
-async function createMessageFromPhoto(photoId, userId, content, tags) {
-  const project = await getProjectFromPhotoId(photoId);
-  return await createMessage(
-    project._id,
-    project.title,
-    userId,
-    content,
-    tags,
-    1,
-    photoId
-  );
-}
-
-async function getProject(projectId) {
-  projectId = await validation.checkId(projectId);
-
-  const projectCollection = await projects();
-  const project = await projectCollection.findOne({
-    _id: new ObjectId(projectId),
-  });
-  if (project === null) throw "No project with that id";
-
-  project._id = project._id.toString();
-  return project;
-}
-
-async function getProjectFromTaskId(taskId) {
-  taskId = await validation.checkId(taskId);
-
-  const projectCollection = await projects();
-  const project = await projectCollection.findOne({
-    "tasks._id": new ObjectId(taskId),
-  });
-  if (project === null) throw "No task with that id";
-
-  project._id = project._id.toString();
-  return project;
-}
-
-async function getProjectFromPhotoId(photoId) {
-  photoId = validation.checkId(photoId);
-
-  const projectCollection = await projects();
-  const project = await projectCollection.findOne({
-    "photos._id": new ObjectId(photoId),
-  });
-  if (project === null) throw "No photo with that id";
-
-  project._id = project._id.toString();
-  return project;
-}
-
-async function editMessage(messageId, content) {
-  messageId = validation.checkId(messageId);
-  content = validation.checkString(content);
-
-  let message = await getMessage(messageId);
-
-  const projectCollection = await projects();
-  const updateInfo = await projectCollection.updateOne(
-    { "activity._id": new ObjectId(messageId) },
-    { $set: { "activity.$[updateMessage].content": content } },
-    { arrayFilters: [{ "updateMessage._id": new ObjectId(messageId) }] }
-  );
-
-  message = await getMessage(messageId);
-  return message;
-}
-
-async function removeMessage(messageId) {
-  messageId = validation.checkId(messageId);
-
-  const projectCollection = await projects();
-  const project = await projectCollection.findOne({
-    "activity._id": new ObjectId(messageId),
-  });
-  if (project === null) throw "No message with that id";
-
-  const updateInfo = await projectCollection.updateOne(
-    { _id: project._id },
-    { $pull: { activity: { _id: new ObjectId(messageId) } } }
-  );
-
-  return { success: true };
+  const updatedProject = await getProject(projectId);
+  return updatedProject;
 }
 
 module.exports = {
-  getMessage,
-  getAllMessages,
-  createMessageFromProject,
-  createMessageFromTask,
-  createMessageFromSubtask,
-  createMessageFromPhoto,
-  editMessage,
-  removeMessage,
+  getProject,
+  getAllProjects,
+  createProject,
+  joinProject,
+  getUsersInProject,
+  findUserInProject,
+  moveProject,
 };
