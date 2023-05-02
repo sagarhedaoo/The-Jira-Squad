@@ -94,12 +94,16 @@ router.get("/account", async (req, res) => {
   }
 });
 
-router.get("/signin", async (req, res) => {
-  let loggedOrNot = req.session.userId;
+// router.get("/signin", async (req, res) => {
+//   let loggedOrNot = req.session.userId;
 
-  if (loggedOrNot) {
-    return res.redirect("/homePage");
-  }
+//   if (loggedOrNot) {
+//     return res.redirect("signin2");
+//   }
+//   res.render("signin2");
+// });
+
+router.get("/signin", function (req, res) {
   res.render("signin");
 });
 
@@ -107,7 +111,7 @@ router.post("/signin", async (req, res) => {
   let loggedOrNot = req.session.userId;
 
   if (loggedOrNot) {
-    return res.redirect("/homePage");
+    return res.redirect("/signin");
   }
 
   const { username, password } = req.body;
@@ -186,7 +190,7 @@ router.post("signup", async (req, res) => {
 
     return res.redirect("/homePage");
   } catch (e) {
-    res.status(404).render("/users/signup", { message: e });
+    res.status(404).render("/signup", { message: e });
   }
 });
 
