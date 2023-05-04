@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Solar Project Dashboard</title>
+    <style>
+      /* CSS styles for the dashboard */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+      }
+      header {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+      }
+      .user-table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      .user-table th,
+      .user-table td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      .user-table th {
+        background-color: #4caf50;
+        color: #fff;
+      }
+      .progress-bar {
+        background-color: #ddd;
+        border-radius: 5px;
+        height: 20px;
+        margin: 10px 0;
+        overflow: hidden;
+        width: 100%;
+      }
+      .progress {
+        background-color: #4caf50;
+        height: 100%;
+        text-align: center;
+        color: #fff;
+      }
+      .project-stats {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 100%;
+      }
+      .stat {
+        background-color: #fff;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        flex: 1;
+        margin: 10px;
+        padding: 20px;
+        text-align: center;
+      }
+      .stat h2 {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Solar Project Dashboard</h1>
+    </header>
+    <div class="container">
+      <h2>Users</h2>
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John Doe</td>
+            <td>johndoe@example.com</td>
+            <td>Project Manager</td>
+          </tr>
+          <tr>
+            <td>Jane Smith</td>
+            <td>janesmith@example.com</td>
+            <td>Developer</td>
+          </tr>
+          <tr>
+            <td>Bob Johnson</td>
+            <td>bjohnson@example.com</td>
+            <td>Engineer</td>
+          </tr>
+        </tbody>
+      </table>
+      <h2>Project Progress</h2>
+      <div class="progress-bar">
+        <div class="progress" style="width: 75%">75%</div>
+      </div>
+      <p>Project Timeline: Q3 2022 - Q4 2023</p>
+      <div class="project-stats">
+        <div class="stat">
+          <h2>Total Energy Used</h2>
+          <p>245,000 kWh</p>
+        </div>
+        <div class="stat">
+          <h2>Estimated Energy Savings</h2>
+          <p>45,000 kWh</p>
+        </div>
+        <div class="stat">
+          <h2>Number of Solar Panels</h2>
+          <p>1,000</p>
+        </div>
+        <div class="stat">
+          <h2>Total Project Cost</h2>
+          <p>$2,500,000</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
