@@ -1,35 +1,4 @@
-.bmiCategories {
-  float: absolute;
-  font-size: 1em;
-  color: #1e0044;
-  padding: 2px;
-}
 
-.bmiChart {
-  float: right;
-  font-size: 1em;
-  color: #1e0044;
-  padding: 40px;
-  width: 45%;
-}
-
-.bmiResults {
-  font-size: 1.5em;
-  font-weight: bold;
-  color: white;
-  float: center;
-}
-
-.bmiButton {
-  background-color: #1e0044;
-  color: white;
-  transform: scale(1);
-}
-
-.bmiButton:hover {
-  color: white;
-  background-color: #7e738d;
-}
 
 .categories a {
   color: #1e0044;
@@ -58,13 +27,7 @@ hr {
   border: none;
 }
 
-.inputWeight {
-  font-weight: bold;
-}
 
-.inputHeight {
-  font-weight: bold;
-}
 
 .intro {
   font-size: 2em;
@@ -169,15 +132,15 @@ body {
 }
 
 #signinForm {
-  padding-right: 300px;
-  padding-left: 300px;
+  padding-right: 30px;
+  padding-left: 30px;
   text-align: left;
   margin: 5%;
 }
 
 #signupForm {
-  padding-right: 300px;
-  padding-left: 300px;
+  padding-right: 30px;
+  padding-left: 30px;
   text-align: left;
   margin: 3%;
 }
@@ -334,11 +297,12 @@ body {
 }
 
 .welcome {
-  font-size: 2em;
+  font-size: 3em;
   font-weight: bold;
   padding-right: 10px;
   padding-left: 1px;
   color: #1e0044;
+  text-align: center;
 }
 
 #addnewPosttip {
@@ -520,8 +484,13 @@ body {
 }
 
 form {
-  max-width: 600px;
+  width: 100%;
+  max-width: 700px;
   margin: 0 auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f5f5f5;
 }
 
 label {
@@ -531,6 +500,7 @@ label {
 
 input[type="text"],
 input[type="email"],
+input[type="password"],
 input[type="tel"],
 textarea {
   display: block;
@@ -634,7 +604,7 @@ body {
   font-size: 20px;
 }
 
-.buttoninput:hover {
+.buttoninput {
   background-color: #8f8acc;
   color: white;
 }
@@ -678,12 +648,12 @@ body {
   border-radius: 0 10px 10px 0;
 }
 
-.check-button:hover {
+.check-button {
   background-color: #37b3cc;
   color: white;
 }
 
-.trash-button:hover {
+.trash-button {
   background-color: #6b73c1;
   color: white;
 }

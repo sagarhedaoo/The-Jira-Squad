@@ -7,11 +7,11 @@ const userData = data.users;
 const photoData = data.photos;
 
 router.get("/tasks", async (req, res) => {
-  res.render("tasks.handlebars");
+  res.render("tasks");
 });
 
 router.post("/tasks", async (req, res) => {
-  res.render("home.handlebars");
+  res.render("tasks");
 });
 
 router.delete("/tasks", async (req, res) => {
@@ -33,9 +33,9 @@ router.get("/", async (req, res) => {
         userLogin = await userData.getUserById(req.session.userId);
       }
     }
-    res.render("home.handlebars", { userLogin });
+    res.render("home", { userLogin });
   } catch (error) {
-    res.render("signin.handlebars");
+    res.render("signin");
   }
 });
 
@@ -59,7 +59,7 @@ router.get("/search", async (req, res) => {
 
     let postArr = await postData.getPostByString(req.query.searchString);
 
-    res.render("home/home.handlebars", { postArr, userLogin });
+    res.render("home/home", { postArr, userLogin });
   } catch (error) {
     res.redirect("/homePage");
   }
@@ -111,7 +111,7 @@ router.post("/signin", async (req, res) => {
   let loggedOrNot = req.session.userId;
 
   if (loggedOrNot) {
-    return res.redirect("/signin");
+    return res.redirect("/");
   }
 
   const { username, password } = req.body;
@@ -122,7 +122,7 @@ router.post("/signin", async (req, res) => {
       if (await bcrypt.compare(password, allUser[i].password)) {
         req.session.userId = allUser[i]._id.toHexString();
 
-        return res.redirect("/homePage");
+        return res.redirect("/");
       }
 
       break;
@@ -137,7 +137,7 @@ router.get("/signup", async (req, res) => {
   let loggedOrNot = req.session.userId;
 
   if (loggedOrNot) {
-    return res.redirect("/homePage");
+    return res.redirect("/");
   }
 
   res.render("signup");
@@ -190,7 +190,7 @@ router.post("signup", async (req, res) => {
 
     return res.redirect("/homePage");
   } catch (e) {
-    res.status(404).render("/signup", { message: e });
+    res.status(404).render("signup", { message: e });
   }
 });
 
@@ -358,9 +358,9 @@ router.get("/photo", async (req, res) => {
         userLogin = await userData.getUserById(req.session.userId);
       }
     }
-    res.render("photoForm.handlebars");
+    res.render("photoForm");
   } catch (e) {
-    res.render("home.handlebars");
+    res.render("home");
   }
 });
 
@@ -376,6 +376,6 @@ router.post("/submit", async (req, res) => {
     photos
   );
 
-  res.render("photo.handlebars");
+  res.render("photo");
 });
 module.exports = router;

@@ -19,27 +19,35 @@
     <div class="container">
       <div class="inputcol">
         <textarea name="text" class="textarea"></textarea>
-        <button type="button" class="buttoninput"><i
-            class="fa-solid fa-check"
-          ></i></button>
+        <button type="button" class="buttoninput" onclick="createtask()"><i class="fa-solid fa-check"></i></button>
       </div>
     </div>
     <div class="todolist">
 
     </div>
 
-    <script id="tasks-template" type="text/x-handlebars-template">
+    
+    <div class="itemall"> <p class="item">Visit House 1</p> <button
+        class="check-button"><i class="fa-solid fa-check"></i></button> <button
+        class="trash-button"><i class="fa-solid fa-trash"></i></button> </div>
+        <div class="itemall"> <p class="item">Take survey in 201, Hoboken.</p> <button
+        class="check-button"><i class="fa-solid fa-check"></i></button> <button
+        class="trash-button"><i class="fa-solid fa-trash"></i></button> </div>
+        <div class="itemall"> <p class="item">Complete post installation check in 501 Jersey street.</p> <button
+        class="check-button"><i class="fa-solid fa-check"></i></button> <button
+        class="trash-button"><i class="fa-solid fa-trash"></i></button> </div>
       {{#each tasks}}
         <div class="itemall"> <p class="item">{{this}}</p> <button
         class="check-button"><i class="fa-solid fa-check"></i></button> <button
         class="trash-button"><i class="fa-solid fa-trash"></i></button> </div>
+        
       {{/each}}
-    </script>
+    
 
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"
     ></script>
-    <script src="../public/js/app.js"></script>
+    
 
   </body>
 </html>

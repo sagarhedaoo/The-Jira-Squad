@@ -1,11 +1,12 @@
 <body>
+  
   <div>
-    <br />
-    <form id="signinForm" method="post" action="/views/signin.handlebars">
+   <p class="welcome" text-align="center">Welcome back!</p>
+  <p class="welcome">Please Login Here</p>
+   
+    <form id="signinForm" method="post" action="/views/signin">
 
-      <p class="welcome">Welcome back!</p>
-      <p class="welcome">Please Login Here</p>
-      <br />
+     
 
       <p class="noPost">Username :</p>
       <input
@@ -29,8 +30,10 @@
       <div class="form-group">
         <button type="submit" class="btn AllButton">Login</button>
       </div>
-
-      <a href="http://localhost:3000/views/signup">Register</a>
+      <div class="form-group">
+        <br>
+      <button   class="btn AllButton" href="http://localhost:3000/signup">Register</button>
+    </div>
 
       {{#unless status}}
         <p class="wrongMsg">{{message}}</p>
@@ -40,13 +43,6 @@
     </form>
   </div>
 
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
+ 
 
 </body>
