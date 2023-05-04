@@ -10,7 +10,7 @@ const constructorMethod = (app) => {
   });
 
   app.get("/login", (req, res) => {
-    res.sendFile("views/signin34.html", { root: __dirname });
+    res.sendFile("views/signin.html", { root: __dirname });
   });
 
   // Route for the Dashboard page
