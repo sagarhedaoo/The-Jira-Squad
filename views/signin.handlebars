@@ -1,12 +1,10 @@
 <body>
-  
-  <div>
-   <p class="welcome" text-align="center">Welcome back!</p>
-  <p class="welcome">Please Login Here</p>
-   
-    <form id="signinForm" method="post" action="/views/signin">
 
-     
+  <div>
+    <p class="welcome" text-align="center">Welcome back!</p>
+    <p class="welcome">Please Login Here</p>
+
+    <form id="signinForm" method="post" action="/views/signin">
 
       <p class="noPost">Username :</p>
       <input
@@ -31,9 +29,19 @@
         <button type="submit" class="btn AllButton">Login</button>
       </div>
       <div class="form-group">
-        <br>
-      <button   class="btn AllButton" href="http://localhost:3000/signup">Register</button>
-    </div>
+        <br />
+        <button
+          class="btn AllButton"
+          href="http://localhost:3000/signup"
+        >Register</button>
+      </div>
+
+      <script>
+        async function postData(uri = "", data = {}) { const reponse = await
+        fetch(uri, { method: "POST", headers: { "Content-Type":
+        "application/json", }, body: JSON.stringify(data), }); let rdata = await
+        reponse.json(); return rdata; }
+      </script>
 
       {{#unless status}}
         <p class="wrongMsg">{{message}}</p>
@@ -42,7 +50,5 @@
 
     </form>
   </div>
-
- 
 
 </body>
