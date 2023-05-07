@@ -1,5 +1,7 @@
 # SOLAR Project - SSW 555
 
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/sagarhedaoo/The-Jira-Squad/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/sagarhedaoo/The-Jira-Squad/tree/main)
+
 ## Team
 
 - Sagar Hedaoo
