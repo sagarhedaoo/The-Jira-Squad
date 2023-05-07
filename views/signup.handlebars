@@ -3,18 +3,32 @@
      <p class="welcome">Welcome to Solar Management Portal!</p>
       <p class="welcome">To enjoy all that this portal has to offer, RegisterNow!</p>
 
-    <form id="signupForm" method="post" action="/views/signup">
-
-     
+    <form id="signupForm" method="post" action="/signup">
       <br />
-
-      <p class="noPost">Username :</p>
-
+      <p class="noPost">First Name :</p>
+  <input
+          type="text"
+          class="form-control"
+          id="fname"
+          name="fname"
+          placeholder="John"
+        />
+      <br />
+      <p class="noPost">Last Name :</p>
+  <input
+          type="text"
+          class="form-control"
+          id="lname"
+          name="lname"
+          placeholder="Doe"
+        />
+      <br />
+      <p class="noPost">Email :</p>
       <input
         type="email"
         class="form-control"
-        id="signupUserName"
-        name="username"
+        id="email"
+        name="email"
         placeholder="abc456@gmail.com"
       />
       <br />
@@ -22,7 +36,7 @@
       <input
         type="text"
         class="form-control"
-        id="signupNickName"
+        id="nickname"
         name="nickname"
         placeholder="Display Name Here"
       />
@@ -31,7 +45,7 @@
       <input
         type="password"
         class="form-control"
-        id="signupPassword"
+        id="password"
         name="password"
         placeholder="Password Here"
       />
@@ -40,8 +54,8 @@
       <input
         type="password"
         class="form-control"
-        id="signupConfirmPassword"
-        name="password"
+        id="confirm_password"
+        name="confirm_password"
         placeholder="Confirm Password Here"
       />
       <br />

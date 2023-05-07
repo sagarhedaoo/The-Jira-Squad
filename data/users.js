@@ -1,21 +1,28 @@
 const mongoCollections = require("../config/mongoCollections");
-const users = mongoCollections.users;
+const users = mongoCollections.user;
 ObjectId = require("mongodb").ObjectID;
 
-async function createUser(username, password, nickname) {
-  let tempUsername = username.toLowerCase();
+async function createUser(fname, lname, email, password, nickname) {
+  try{
+ 
 
   //Error Checking
-
-  if (!tempUsername || typeof tempUsername !== "string") {
-    throw "Error: Username not provided";
+  console.log("aaya idhar")
+  if (!fname || typeof(fname) !== "string") {
+    throw "Error: First Name not provided";
+  }
+  if (!lname || typeof(lname) !== "string") {
+    throw "Error: Last Name not provided";
   }
 
-  if (!password || typeof password !== "string") {
+  if (!password || typeof(password) !== "string") {
     throw "Error: Password not provided";
   }
+  if (!email || typeof(email) !== "string") {
+    throw "Error: email not provided";
+  }
 
-  if (!nickname || typeof nickname !== "string") {
+  if (!nickname || typeof(nickname) !== "string") {
     throw "Error: Display name not provided";
   }
 
@@ -30,25 +37,20 @@ async function createUser(username, password, nickname) {
   }
 
   const userCollection = await users();
-  let usernameFound = await userCollection.findOne({ username: tempUsername });
+  let Dupe_exists = await userCollection.findOne({ email: email });
 
-  if (usernameFound !== null) {
+  if (Dupe_exists !== null) {
     throw "Error: Username exists";
   }
 
-  let displaynameFound = await userCollection.findOne({ nickname: nickname });
-
-  if (displaynameFound !== null) {
-    throw "Error: Display name exists";
-  }
+ 
 
   let newUser = {
-    username: tempUsername,
+    firstName: fname,
+    lastName: lname,
+    email:email,
     password: password,
-    nickname: nickname,
-    posts: [],
-    comments: [],
-    Admin: false,
+    userName: nickname
   };
 
   const newInsertInformation = await userCollection.insertOne(newUser);
@@ -58,7 +60,14 @@ async function createUser(username, password, nickname) {
   }
 
   return await this.getUserById(newInsertInformation.insertedId);
+
 }
+catch(e){
+  console.log(e);
+
+}
+}
+
 
 async function getAllUsers() {
   const userCollection = await users();
@@ -70,7 +79,7 @@ async function getAllUsers() {
 async function getUserById(userId) {
   const userCollection = await users();
 
-  if (typeof userId == "string") {
+  if (typeof(userId) == "string") {
     const objId = ObjectId.createFromHexString(userId);
     userId = objId;
   }
@@ -119,9 +128,7 @@ async function editUsername(userId, username) {
     throw "Error: User ID not provided";
   }
 
-  if (!tempUsername || typeof tempUsername !== "string") {
-    throw "Error: Username not provided";
-  }
+  
 
   let userObjId = ObjectId.createFromHexString(userId);
 
@@ -206,42 +213,36 @@ async function setAdminAccess(userId) {
   return this.getUserById(userId);
 }
 
-async function addPostToUser(userId, postId) {
-  const userCollection = await users();
-  const updateInfo = await userCollection.updateOne(
-    { _id: ObjectId(userId) },
-    { $addToSet: { posts: postId } }
-  );
+// async function addtaskToUser(userId, tasktId) {
+//   const userCollection = await users();
+//   const updateInfo = await userCollection.updateOne(
+//     { _id: ObjectId(userId) },
+//     { $addToSet: { posts: postId } }
+//   );
 
-  if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
-    throw "Error: Updation failed";
-  }
+//   if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
+//     throw "Error: Updation failed";
+//   }
 
-  return await this.getUserById(userId);
-}
+//   return await this.getUserById(userId);
+// }
 
-async function removePostFromUser(userId, postId) {
-  const userCollection = await users();
-  const updateInfo = await userCollection.updateOne(
-    { _id: ObjectId(userId) },
-    { $pull: { posts: postId } }
-  );
+// async function removePostFromUser(userId, postId) {
+//   const userCollection = await users();
+//   const updateInfo = await userCollection.updateOne(
+//     { _id: ObjectId(userId) },
+//     { $pull: { posts: postId } }
+//   );
 
-  if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
-    throw "Error: Updation failed";
-  }
+//   if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
+//     throw "Error: Updation failed";
+//   }
 
-  return await this.getUserById(userId);
-}
+//   return await this.getUserById(userId);
+// }
 
 module.exports = {
   createUser,
   getUserById,
-  getAllUsers,
-  editUsername,
-  editPassword,
-  editNickname,
-  addPostToUser,
-  removePostFromUser,
-  setAdminAccess,
+  getAllUsers
 };

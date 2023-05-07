@@ -5,13 +5,25 @@ const bcrypt = require("bcryptjs");
 const saltRounds = 5;
 const userData = data.users;
 const photoData = data.photos;
+const taskData = data.tasks;
+//const multer = require('multer');
 
 router.get("/tasks", async (req, res) => {
   res.render("tasks");
 });
 
 router.post("/tasks", async (req, res) => {
-  res.render("tasks");
+
+
+  let task = req.body
+  let userid = req.session.id
+  
+  const task_added = tasks.createTask(task,userid);
+
+  const alltasks = tasks.getAllTasks();
+
+
+  res.render("tasks",{alltasks});
 });
 
 router.delete("/tasks", async (req, res) => {
@@ -33,9 +45,9 @@ router.get("/", async (req, res) => {
         userLogin = await userData.getUserById(req.session.userId);
       }
     }
-    res.render("home", { userLogin });
+    res.render("./home.handlebars", { userLogin });
   } catch (error) {
-    res.render("signin");
+    res.render("./signin.handlebars");
   }
 });
 
@@ -59,9 +71,9 @@ router.get("/search", async (req, res) => {
 
     let postArr = await postData.getPostByString(req.query.searchString);
 
-    res.render("home/home", { postArr, userLogin });
+    res.render("/home.handlebars", { postArr, userLogin });
   } catch (error) {
-    res.redirect("/homePage");
+    res.redirect("/");
   }
 });
 
@@ -69,7 +81,7 @@ router.get("/account", async (req, res) => {
   let loggedOrNot = req.session.userId;
 
   if (!loggedOrNot) {
-    return res.redirect("/homePage");
+    return res.redirect("/");
   }
 
   try {
@@ -84,7 +96,6 @@ router.get("/account", async (req, res) => {
     }
 
     res.render("useraccount", {
-      username: loggedUser.username,
       nickname: loggedUser.nickname,
       "post-list": posts,
       loggedUser,
@@ -104,7 +115,7 @@ router.get("/account", async (req, res) => {
 // });
 
 router.get("/signin", function (req, res) {
-  res.render("signin");
+  res.render("./signin.handlebars");
 });
 
 router.post("/signin", async (req, res) => {
@@ -114,81 +125,91 @@ router.post("/signin", async (req, res) => {
     return res.redirect("/");
   }
 
-  const { username, password } = req.body;
+  
+  const { email, password } = req.body;
   const allUser = await userData.getAllUsers();
 
   for (i = 0; i < allUser.length; i++) {
-    if (username.toLowerCase() == allUser[i].username) {
+    if (email.toLowerCase() == allUser[i].email) {
       if (await bcrypt.compare(password, allUser[i].password)) {
         req.session.userId = allUser[i]._id.toHexString();
-
-        return res.redirect("/");
+        break;
       }
-
-      break;
+      return res.redirect("/");
     }
-  }
-  res.status(401).render("signin", {
+  else{
+  res.status(401).render("./signin.handlebars", {
     message: "Error : Credentials do not match. No Account? Register now!",
   });
+}}
 });
 
 router.get("/signup", async (req, res) => {
-  let loggedOrNot = req.session.userId;
-
+  loggedOrNot = req.session.userId;
+console.log("get mein to aa ja!!!!!")
   if (loggedOrNot) {
     return res.redirect("/");
   }
 
-  res.render("signup");
+  res.render("./signup.handlebars");
 });
 
-router.post("signup", async (req, res) => {
+router.post("/signup", async (req, res) => {
   let loggedOrNot = req.session.userId;
+  if(loggedOrNot){
+    res.redirect("/")
+  }
 
-  const { username, nickname, password } = req.body;
+  const { fname, lname, email, nickname, password , confirm_password,} = req.body;
+  console.log("chu aaya ki nai????????",fname)
   try {
-    if (!username) {
-      throw `You must provide a username`;
+    if (!fname) {
+    throw `You must provide a First Name.`;
+  }
+    if (!lname) {
+      throw `You must provide a Last Name.`;
+    }
+    if (!email) {
+      throw `You must provide an email.`;
     }
     if (!nickname) {
-      throw `You must provide a nickname`;
+      throw `You must provide a nickname.`;
     }
-    if (!password[0]) {
-      throw `You must provide a password`;
+    if (!password) {
+      throw `You must provide a password.`;
     }
-    if (!password[1]) {
-      throw `You must provide a confirm password`;
+    if (!confirm_password) {
+      throw `You must provide a confirm password.`;
     }
-    if (password[0] != password[1]) {
+    if (password != confirm_password) {
       throw `Password don't match`;
     }
 
     //error check for password
 
-    if (password[0].length === 0) {
+    if (password.length === 0) {
       throw "Error : Please enter the password";
-    } else if (password[0].length < 3) {
+    } else if (password.length < 3) {
       throw "Error : Password must be atleast of 3 characters";
-    } else if (password[0].length > 20) {
+    } else if (password.length > 20) {
       throw "Error : Password must not be more than 20 characters";
     } else {
       const regex = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g;
 
       if (
-        password[0].match("[a-zA-Z0-9]" === null) ||
-        password[0].match(regex) === null
+        password.match("[a-zA-Z0-9]" === null) ||
+        password.match(regex) === null
       ) {
         throw `Error : Password must contain atleast one capital letter, a number and a special character`;
       }
     }
-
-    const hash = await bcrypt.hash(password[0], saltRounds);
-    const newUser = await userData.createUser(username, hash, nickname);
+  console.log("routes mein aaya")
+    const hash = await bcrypt.hash(password, saltRounds);
+    const newUser = await userData.createUser(fname, lname, email, hash, nickname);
 
     loggedOrNot = newUser._id.toHexString();
 
-    return res.redirect("/homePage");
+    return res.redirect("/");
   } catch (e) {
     res.status(404).render("signup", { message: e });
   }
@@ -198,12 +219,12 @@ router.get("/signout", async (req, res) => {
   let loggedOrNot = req.session.userId;
 
   if (!loggedOrNot) {
-    return res.redirect("/homePage");
+    return res.redirect("/");
   }
 
   req.session.destroy();
 
-  return res.redirect("/homePage");
+  return res.redirect("/");
 });
 
 router.post("/account", async (req, res) => {
@@ -349,10 +370,9 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/photo", async (req, res) => {
+router.get("/contracts", async (req, res) => {
   try {
     let userLogin = null;
-
     if (req.session) {
       if (req.session.userId) {
         userLogin = await userData.getUserById(req.session.userId);
@@ -360,14 +380,16 @@ router.get("/photo", async (req, res) => {
     }
     res.render("photoForm");
   } catch (e) {
-    res.render("home");
+    res.redirect("/");
   }
 });
 
 // Set up a POST route to handle form submissions
-router.post("/submit", async (req, res) => {
+router.post("/contracts", async (req, res) => {
   const { clientName, staffName, locationAddress } = req.body;
+  console.log("routes pohoch gaye", req.body.clientName);
   const photos = req.body.photos;
+ 
   // Do something with the form data and photos here
   const result = await photoData.storePhoto(
     clientName,
@@ -376,6 +398,6 @@ router.post("/submit", async (req, res) => {
     photos
   );
 
-  res.render("photo");
+  res.render("photo",result);
 });
 module.exports = router;

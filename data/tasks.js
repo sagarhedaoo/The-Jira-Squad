@@ -39,7 +39,7 @@ async function getAllTasks(projectId) {
   return project.tasks;
 }
 
-async function createTask(userId, projectId, title, description, dueDate) {
+async function createTask(userId,task) {
   projectId = validation.checkId(projectId);
   title = validation.checkString(title);
   description = validation.checkString(description);
